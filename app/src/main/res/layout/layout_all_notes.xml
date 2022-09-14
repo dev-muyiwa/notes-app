@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:id="@+id/note_background"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/note_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#749373"
+            android:padding="8dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/note_title"
+                style="@style/Theme.NotesApp.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/note_category"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Note Title" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/note_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/note_title"
+                app:srcCompat="@drawable/ic_work" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/note_content"
+            style="@style/Theme.NotesApp.Subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/note_header"
+            android:layout_alignParentBottom="true"
+            android:paddingHorizontal="12dp"
+            tools:text="Hell\nhellHell\nhellHell\nhellHell\nhellHell\nhell" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/AllNotesFragment">
+
+    <fragment
+        android:id="@+id/AllNotesFragment"
+        android:name="com.devmuyiwa.notesapp.presentation.listOfNotes.AllNotesFragment"
+        android:label="All Notes"
+        tools:layout="@layout/fragment_all_notes" >
+        <action
+            android:id="@+id/action_allNotesFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
+        <action
+            android:id="@+id/action_allNotesFragment_to_addNewNoteFragment"
+            app:destination="@id/addNewNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewNoteFragment"
+        android:name="com.devmuyiwa.notesapp.presentation.AddNewNoteFragment"
+        android:label="Add New Note"
+        tools:layout="@layout/fragment_add_new_note" >
+        <action
+            android:id="@+id/action_addNewNoteFragment_to_allNotesFragment"
+            app:destination="@id/AllNotesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.devmuyiwa.notesapp.presentation.EditNoteFragment"
+        android:label="Edit Note"
+        tools:layout="@layout/fragment_edit_note" >
+        <action
+            android:id="@+id/action_editNoteFragment_to_allNotesFragment"
+            app:destination="@id/AllNotesFragment" />
+        <argument
+            android:name="currentNote"
+            app:argType="com.devmuyiwa.notesapp.data.model.Note" />
+    </fragment>
+</navigation>
