@@ -1,4 +1,4 @@
-package com.devmuyiwa.notesapp.presentation.listOfNotes
+package com.devmuyiwa.notesapp.presentation.allNotes
 
 import androidx.recyclerview.widget.DiffUtil
 import com.devmuyiwa.notesapp.data.model.Note

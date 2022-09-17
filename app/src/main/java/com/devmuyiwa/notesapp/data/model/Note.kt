@@ -12,6 +12,7 @@ data class Note(
     // Using val instead of var prevents new data from been added
     @PrimaryKey(autoGenerate = true)
     var id: Int,
+    var date: String,
     var title: String,
     var category: Category,
     var description: String

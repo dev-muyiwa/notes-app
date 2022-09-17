@@ -13,6 +13,12 @@
     <string name="work">Work</string>
     <string name="study">Study</string>
     <string name="personal">Personal</string>
+    <string name="edit">Edit</string>
+    <string name="select_category">Select Category</string>
+    <string name="note_description">Description</string>
+    <string name="note">Note</string>
+    <string name="last_updated">Last updated:</string>
+    <string name="title_colon">Title:</string>
     <string-array name="categories">
         <item>Uncategorized</item>
         <item>Home</item>
