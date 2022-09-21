@@ -17,7 +17,9 @@ object DbInstance {
         }
         synchronized(this) {
             val dbInstance = Room.databaseBuilder(
-                context.applicationContext, NotesDb::class.java, "notes.db").build()
+                context.applicationContext, NotesDb::class.java, "notes.db")
+                .fallbackToDestructiveMigration()
+                .build()
             instance = dbInstance
             return dbInstance
         }

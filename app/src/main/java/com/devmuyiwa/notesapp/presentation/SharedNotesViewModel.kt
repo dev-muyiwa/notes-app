@@ -2,42 +2,46 @@ package com.devmuyiwa.notesapp.presentation
 
 import android.app.Application
 import android.text.TextUtils
-import android.view.View
-import android.widget.*
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import com.devmuyiwa.notesapp.R
+import androidx.lifecycle.viewModelScope
+import com.devmuyiwa.notesapp.data.model.DbInstance
 import com.devmuyiwa.notesapp.data.model.Note
+import com.devmuyiwa.notesapp.data.repository.NotesRepository
 import com.devmuyiwa.notesapp.domain.Category
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SharedNotesViewModel(app: Application) : AndroidViewModel(app) {
-    val emptyDb: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val dao = DbInstance.getDatabase(app).getNotesDao()
+    private val repository: NotesRepository = NotesRepository(dao)
 
-    val listener = object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            when (position) {
-                0 -> (parent?.getChildAt(0) as TextView).setCompoundDrawables(
-                    ContextCompat.getDrawable(app.applicationContext, R.drawable.ic_home),
-                    null, null, null)
-            }
+    fun insertNote(note: Note) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addNewNote(note)
         }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {}
-
     }
 
-    fun isDbEmpty(notes: List<Note>){
-        emptyDb.value = notes.isEmpty()
+    fun updateNote(note: Note) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateNote(note)
+        }
     }
 
-    fun validateUserInput(title: String, description: String): Boolean {
-        return if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description)) false
-        else !(title.isEmpty() || description.isEmpty())
+    fun deleteNote(note: Note) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteNote(note)
+        }
     }
 
-    fun categoryToInt(category: Category): Int{
-        return when(category){
+    fun validateUserInput(title: String, description: String, category: String?): Boolean {
+        return if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) ||
+            TextUtils.isEmpty(category)
+        ) false
+        else !(title.isEmpty() || description.isEmpty() || category.isNullOrEmpty())
+    }
+
+    fun categoryToInt(category: Category): Int {
+        return when (category) {
             Category.UNCATEGORIZED -> 0
             Category.HOME -> 1
             Category.WORK -> 2

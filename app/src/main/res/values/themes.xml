@@ -2,29 +2,47 @@
     <!-- Base application theme. -->
     <style name="Theme.NotesApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/teal_700</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/purple_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor" tools:targetApi="l">?colorPrimary</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
-    <style name="Theme.NotesApp.Title" parent="ThemeOverlay.Material3.AutoCompleteTextView">
+    <style name="Theme.NotesApp.AlertDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/black</item>
+    </style>
+
+    <style name="Theme.NotesApp.Toolbar" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:titleTextColor" tools:targetApi="m">?attr/colorControlNormal</item>
+        <item name="android:letterSpacing" tools:targetApi="l">0.03</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme.NotesApp.Title" parent="Theme.NotesApp">
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="maxLines">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="maxLines">3</item>
         <item name="android:textAlignment">textStart</item>
     </style>
 
-    <style name="Theme.NotesApp.Subtitle" parent="ThemeOverlay.Material3.AutoCompleteTextView">
+    <style name="Theme.NotesApp.Subtitle" parent="Theme.NotesApp">
         <item name="android:textSize">18sp</item>
-        <item name="maxLines">4</item>
-        <item name="android:textAlignment">textStart</item>
+        <item name="maxLines">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAlignment">textEnd</item>
         <item name="android:layout_marginTop">5dp</item>
     </style>
 </resources>

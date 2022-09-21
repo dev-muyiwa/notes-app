@@ -1,4 +1,4 @@
-package com.devmuyiwa.notesapp.presentation.listOfNotes
+package com.devmuyiwa.notesapp.presentation.allNotes
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -11,18 +11,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.devmuyiwa.notesapp.R
 import com.devmuyiwa.notesapp.data.model.Note
 import com.devmuyiwa.notesapp.databinding.FragmentAllNotesBinding
-import com.devmuyiwa.notesapp.presentation.AllNotesViewModel
-import com.devmuyiwa.notesapp.presentation.SharedNotesViewModel
+import com.devmuyiwa.notesapp.domain.SpanSize
 
 class AllNotesFragment : Fragment() {
     private var _binding: FragmentAllNotesBinding? = null
     private val binding get() = _binding!!
     private val noteViewModel: AllNotesViewModel by viewModels()
-    private val sharedNotesViewModel: SharedNotesViewModel by viewModels()
     private var notesAdapter: AllNotesAdapter? = null
 
     override fun onCreateView(
@@ -38,14 +36,18 @@ class AllNotesFragment : Fragment() {
         inflateToolbar()
         notesAdapter = AllNotesAdapter(requireContext())
         noteViewModel.getAllNotes.observe(viewLifecycleOwner) { listOfNotes ->
-            sharedNotesViewModel.isDbEmpty(listOfNotes)
+            noteViewModel.isDbEmpty(listOfNotes)
             notesAdapter?.setData(listOfNotes as ArrayList<Note>)
         }
         binding.listOfNotesRecyclerView.adapter = notesAdapter
-        binding.listOfNotesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager = GridLayoutManager(requireContext(), 2)
+        layoutManager.orientation = GridLayoutManager.VERTICAL
+        layoutManager.reverseLayout = false
+        layoutManager.spanSizeLookup = SpanSize(3, 1, 2)
+        binding.listOfNotesRecyclerView.layoutManager = layoutManager
         binding.listOfNotesRecyclerView.hasFixedSize()
 
-        sharedNotesViewModel.emptyDb.observe(viewLifecycleOwner) {
+        noteViewModel.emptyDb.observe(viewLifecycleOwner) {
             displayNoData(it)
         }
 
@@ -72,10 +74,6 @@ class AllNotesFragment : Fragment() {
                         deleteAllNotes()
                         true
                     }
-                    R.id.sort -> {
-//                        TODO("Implement sorting by categories")
-                        true
-                    }
                     else -> false
                 }
             }
@@ -97,7 +95,7 @@ class AllNotesFragment : Fragment() {
     }
 
     private fun deleteAllNotes() {
-        val builder = AlertDialog.Builder(requireContext())
+        val builder = AlertDialog.Builder(requireContext(), R.style.Theme_NotesApp_AlertDialogTheme)
         builder.setPositiveButton("Yes") { _, _ ->
             noteViewModel.deleteAllNotes()
             Toast.makeText(requireContext(), "All Notes deleted successfully", Toast.LENGTH_SHORT)

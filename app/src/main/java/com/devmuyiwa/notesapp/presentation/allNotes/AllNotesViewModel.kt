@@ -1,4 +1,4 @@
-package com.devmuyiwa.notesapp.presentation
+package com.devmuyiwa.notesapp.presentation.allNotes
 
 import android.app.Application
 import androidx.lifecycle.*
@@ -9,35 +9,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AllNotesViewModel(app: Application) : AndroidViewModel(app) {
+    val emptyDb: MutableLiveData<Boolean> = MutableLiveData(false)
     private val dao = DbInstance.getDatabase(app).getNotesDao()
     private val repository: NotesRepository = NotesRepository(dao)
     val getAllNotes: LiveData<List<Note>> = repository.getAllNotes
 
-    fun insertNote(note: Note) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addNewNote(note)
-        }
+    fun isDbEmpty(notes: List<Note>) {
+        emptyDb.value = notes.isEmpty()
     }
 
-    fun updateNote(note: Note){
+    fun deleteAllNotes() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateNote(note)
-        }
-    }
-
-    fun deleteNote(note: Note){
-        viewModelScope.launch(Dispatchers.IO){
-            repository.deleteNote(note)
-        }
-    }
-    
-    fun deleteAllNotes(){
-        viewModelScope.launch(Dispatchers.IO){
             repository.deleteAllNotes()
         }
     }
 
-    fun searchDb(query: String): LiveData<List<Note>>{
+    fun searchDb(query: String): LiveData<List<Note>> {
         return repository.searchDb(query)
     }
 }

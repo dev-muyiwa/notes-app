@@ -1,8 +1,9 @@
-package com.devmuyiwa.notesapp.presentation
+package com.devmuyiwa.notesapp.presentation.editNote
 
-import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -14,12 +15,16 @@ import androidx.navigation.fragment.navArgs
 import com.devmuyiwa.notesapp.R
 import com.devmuyiwa.notesapp.data.model.Note
 import com.devmuyiwa.notesapp.databinding.FragmentEditNoteBinding
+import com.devmuyiwa.notesapp.presentation.SharedNotesViewModel
+import java.text.SimpleDateFormat
+import java.util.*
+
+private const val TAG = "EditNoteFragment"
 
 class EditNoteFragment : Fragment() {
     private var _binding: FragmentEditNoteBinding? = null
     private val binding get() = _binding!!
     private val args by navArgs<EditNoteFragmentArgs>()
-    private val allNotesViewModel: AllNotesViewModel by viewModels()
     private val sharedNotesViewModel: SharedNotesViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,16 +36,24 @@ class EditNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fetchDataIntoViews()
         inflateToolbar()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchDataIntoViews()
     }
 
     private fun fetchDataIntoViews() {
         binding.noteTitle.setText(args.currentNote.title)
         binding.noteDescription.setText(args.currentNote.description)
-        binding.noteCategory.setSelection(sharedNotesViewModel.categoryToInt(args.currentNote
-            .category))
-        binding.noteCategory.onItemSelectedListener = sharedNotesViewModel.listener
+        val categories = resources.getStringArray(R.array.categories)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.layout_list_text, categories)
+        val dropDown = binding.dropdownEditable
+        val categoryIndex = sharedNotesViewModel.categoryToInt(args.currentNote.category)
+        dropDown.setAdapter(arrayAdapter)
+        dropDown.setText(dropDown.adapter.getItem(categoryIndex).toString())
+        arrayAdapter.filter.filter(null)
     }
 
 
@@ -57,10 +70,6 @@ class EditNoteFragment : Fragment() {
                         updateNoteToDb()
                         true
                     }
-                    R.id.delete_note -> {
-                        deleteNoteFromDb()
-                        true
-                    }
                     else -> false
                 }
             }
@@ -69,32 +78,27 @@ class EditNoteFragment : Fragment() {
 
     private fun updateNoteToDb() {
         val title = binding.noteTitle.text.toString()
-        val category = binding.noteCategory.selectedItem.toString()
+        val category = binding.categoryDropdown.editText?.text.toString()
         val description = binding.noteDescription.text.toString()
-        val validation = sharedNotesViewModel.validateUserInput(title, description)
+        val validation = sharedNotesViewModel.validateUserInput(title, description, category)
         if (validation) {
-            val updatedNote = Note(args.currentNote.id, title,
+            val calendar = Calendar.getInstance()
+            val date = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+                .format(calendar.time)
+            val updatedNote = Note(args.currentNote.id, date, title,
                 sharedNotesViewModel.stringToCategory(category), description)
-            allNotesViewModel.updateNote(updatedNote)
-            Toast.makeText(requireContext(), "Note updated successfully", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_editNoteFragment_to_allNotesFragment)
+            sharedNotesViewModel.updateNote(updatedNote)
+            Log.d(TAG, "Note updated to  Room successfully")
+            Toast.makeText(requireContext(), "Note updated successfully", Toast.LENGTH_SHORT)
+                .show()
+            val action =
+                EditNoteFragmentDirections.actionEditNoteFragmentToDetailedNoteFragment(updatedNote)
+            findNavController().navigate(action)
+            findNavController().popBackStack()
         } else {
-            Toast.makeText(requireContext(), "Text fields cannot be empty", Toast.LENGTH_SHORT)
+            Toast.makeText(requireContext(), "Field(s) cannot be empty!", Toast.LENGTH_SHORT)
                 .show()
         }
-    }
-
-    private fun deleteNoteFromDb() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes") { _, _ ->
-            allNotesViewModel.deleteNote(args.currentNote)
-            Toast.makeText(requireContext(), "Note deleted successfully", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_editNoteFragment_to_allNotesFragment)
-        }
-        builder.setNegativeButton("No") { _, _ -> }
-        builder.setTitle("Delete ${args.currentNote.title}?")
-        builder.setMessage("Are you sure you want to delete this note permanently?")
-        builder.create().show()
     }
 
     override fun onDestroyView() {

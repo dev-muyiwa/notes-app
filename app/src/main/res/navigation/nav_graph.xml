@@ -7,35 +7,54 @@
 
     <fragment
         android:id="@+id/AllNotesFragment"
-        android:name="com.devmuyiwa.notesapp.presentation.listOfNotes.AllNotesFragment"
-        android:label="All Notes"
-        tools:layout="@layout/fragment_all_notes" >
-        <action
-            android:id="@+id/action_allNotesFragment_to_editNoteFragment"
-            app:destination="@id/editNoteFragment" />
+        android:name="com.devmuyiwa.notesapp.presentation.allNotes.AllNotesFragment"
+        android:label="Notes"
+        tools:layout="@layout/fragment_all_notes">
         <action
             android:id="@+id/action_allNotesFragment_to_addNewNoteFragment"
             app:destination="@id/addNewNoteFragment" />
+        <action
+            android:id="@+id/action_AllNotesFragment_to_detailedNoteFragment"
+            app:destination="@id/detailedNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewNoteFragment"
-        android:name="com.devmuyiwa.notesapp.presentation.AddNewNoteFragment"
-        android:label="Add New Note"
-        tools:layout="@layout/fragment_add_new_note" >
+        android:name="com.devmuyiwa.notesapp.presentation.newNote.AddNewNoteFragment"
+        android:label="Add New"
+        tools:layout="@layout/fragment_add_new_note">
         <action
             android:id="@+id/action_addNewNoteFragment_to_allNotesFragment"
-            app:destination="@id/AllNotesFragment" />
+            app:destination="@id/AllNotesFragment"
+            app:popUpTo="@id/AllNotesFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/editNoteFragment"
-        android:name="com.devmuyiwa.notesapp.presentation.EditNoteFragment"
-        android:label="Edit Note"
-        tools:layout="@layout/fragment_edit_note" >
-        <action
-            android:id="@+id/action_editNoteFragment_to_allNotesFragment"
-            app:destination="@id/AllNotesFragment" />
+        android:name="com.devmuyiwa.notesapp.presentation.editNote.EditNoteFragment"
+        android:label="Edit"
+        tools:layout="@layout/fragment_edit_note">
         <argument
             android:name="currentNote"
             app:argType="com.devmuyiwa.notesapp.data.model.Note" />
+        <action
+            android:id="@+id/action_editNoteFragment_to_detailedNoteFragment"
+            app:destination="@id/detailedNoteFragment"
+            app:popUpTo="@id/detailedNoteFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailedNoteFragment"
+        android:name="com.devmuyiwa.notesapp.presentation.detailedNote.DetailedNoteFragment"
+        android:label="About Note"
+        tools:layout="@layout/fragment_detailed_note">
+        <action
+            android:id="@+id/action_detailedNoteFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
+        <argument
+            android:name="currentNoteDetails"
+            app:argType="com.devmuyiwa.notesapp.data.model.Note" />
+        <action
+            android:id="@+id/action_detailedNoteFragment_to_AllNotesFragment"
+            app:destination="@id/AllNotesFragment" />
     </fragment>
 </navigation>

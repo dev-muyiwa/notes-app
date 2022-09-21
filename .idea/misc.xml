@@ -3,14 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/activity_main.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/drawable/ic_search.xml" value="0.1225" />
+        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/drawable/rounded_bg.xml" value="0.1225" />
+        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/activity_main.xml" value="0.67" />
         <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/fragment_add_new_note.xml" value="0.33" />
         <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/fragment_all_notes.xml" value="0.33" />
-        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/fragment_edit_note.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/fragment_detailed_note.xml" value="0.33" />
+        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/fragment_edit_note.xml" value="0.33" />
         <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/fragment_list_of_notes.xml" value="0.33" />
-        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/layout_all_notes.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/layout_all_notes.xml" value="0.25" />
         <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/layout_list_of_notes.xml" value="0.25" />
+        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/layout/layout_list_text.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/menu-v21/menu_list_fragment.xml" value="0.20208333333333334" />
         <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/menu/menu_add_new_fragment.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/menu/menu_details_fragment.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/menu/menu_list_fragment.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/muyiw/Documents/NotesApp/app/src/main/res/menu/menu_update_fragment.xml" value="0.18425925925925926" />
       </map>

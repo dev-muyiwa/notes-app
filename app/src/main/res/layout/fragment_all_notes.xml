@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.listOfNotes.AllNotesFragment">
+    tools:context=".presentation.allNotes.AllNotesFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/no_notes"
@@ -19,6 +19,8 @@
         android:id="@+id/list_of_notes_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/chip_group"
+        android:layout_margin="5dp"
         tools:listitem="@layout/layout_all_notes" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,5 +30,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_add_note" />
+        app:srcCompat="@drawable/ic_add_note"
+        app:tint="?attr/colorPrimaryVariant" />
 </RelativeLayout>
